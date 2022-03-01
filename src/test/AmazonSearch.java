@@ -1,5 +1,7 @@
 package test;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +10,11 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -53,6 +59,18 @@ public class AmazonSearch {
 			}	
 		
 		
+		}
+		WebElement scrollElement=driver.findElement(By.xpath("//*[starts-with(text(),'RESULTS')]"));
+		JavascriptExecutor obj1 = (JavascriptExecutor) driver;
+		obj1.executeScript("arguments[0].scrollIntoView();", scrollElement);
+		
+		TakesScreenshot object1=(TakesScreenshot) driver;
+		File file1=object1.getScreenshotAs(OutputType.FILE);
+		try {
+			FileUtils.copyFile(file1, new File("AmazonProject.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		driver.close();
